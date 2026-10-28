@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Student Attendance Tracker</h1>
+    <p>Maintain student records, mark daily attendance and monitor low attendance.</p>
+  </header>
+
+  <main>
+    <!-- Attendance summary cards -->
+    <section class="summary" id="summary"></section>
+
+    <!-- Date, search, filters and threshold -->
+    <section class="toolbar">
+      <label>Date <input type="date" id="date"></label>
+      <label>Search <input type="text" id="search" placeholder="Name, ID or department"></label>
+      <label>Department
+        <select id="deptFilter"><option value="">All</option></select>
+      </label>
+      <label>Status
+        <select id="statusFilter">
+          <option value="">All</option>
+          <option>Present</option><option>Absent</option>
+          <option>Late</option><option>Leave</option>
+          <option value="Not Marked">Not Marked</option>
+          <option value="Low">Below Threshold</option>
+        </select>
+      </label>
+      <label>Threshold (%) <input type="number" id="threshold" min="1" max="100"></label>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="studentsTab">Students</button>
+      <button class="tab" data-tab="attendanceTab">Mark Attendance</button>
+    </nav>
+
+    <section id="studentsTab" class="panel">
+      <div class="panel-head">
+        <h2>Student Records</h2>
+        <button id="addBtn" class="btn primary">+ Add Student</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Attended / Total</th>
+            <th>Attendance %</th><th>Status on Date</th><th>Actions</th></tr></thead>
+          <tbody id="studentRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="attendanceTab" class="panel hidden">
+      <div class="panel-head">
+        <h2>Mark Attendance</h2>
+        <button id="markAllBtn" class="btn">Mark All Unmarked as Present</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Attendance for Selected Date</th></tr></thead>
+          <tbody id="attendanceRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add / Edit student modal -->
+  <div class="modal hidden" id="studentModal">
+    <div class="modal-box">
+      <h3 id="modalTitle">Add Student</h3>
+      <label>Student ID <input type="text" id="sId" placeholder="e.g. 21CS001"></label>
+      <label>Name <input type="text" id="sName" placeholder="Student name"></label>
+      <label>Department <input type="text" id="sDept" list="deptList" placeholder="e.g. Computer Science">
+        <datalist id="deptList"></datalist></label>
+      <p class="error" id="formError"></p>
+      <div class="modal-actions">
+        <button class="btn" id="cancelBtn">Cancel</button>
+        <button class="btn primary" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attendance history modal -->
+  <div class="modal hidden" id="historyModal">
+    <div class="modal-box">
+      <h3 id="historyTitle"></h3>
+      <div id="historyBody"></div>
+      <div class="modal-actions"><button class="btn primary" id="closeHistory">Close</button></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
